@@ -25,7 +25,6 @@ def first_run():
 
         listening_port = int(input("insert listening TCP port for flask (eg. 5000 ): "))
 
-        os.makedirs('l', exist_ok=True)
         existing_links = os.listdir('./l')
         try:
             existing_links = list(filter(lambda x:re.match(r'[0-9]{4}\.html', x), existing_links))
