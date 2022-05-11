@@ -11,6 +11,8 @@ def first_run():
 
     os.makedirs('l', exist_ok=True)
 
+
+    global hostname
     #Get the configparser object
     config_object = ConfigParser()
 
