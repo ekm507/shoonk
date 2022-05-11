@@ -55,6 +55,8 @@ def shorten(link):
     global hostname
     print(last_number)
     open('last_number', 'w').write(str(last_number))
+    if link[:4] != 'http':
+        link = 'http://' + link
     text = f"""
     <!DOCTYPE html>
         <head>
