@@ -86,9 +86,12 @@ def shorten(link):
     return f"<a href={full_link}>{full_link}</a>"
 
 
+# give it a shortened link and it will return the link file.
 @app.route("/s/<link>")
 def get_full(link):
-    print(link)
+
+    # get number of given link
+    # if there is any errors, it will return a 404 page
     link = link[:4]
     if re.match(r'^[0-9]{1,4}$', link):
         try:
@@ -99,6 +102,7 @@ def get_full(link):
         return (open(f'404.html').read())
 
 
+# run the application. it will first load/save configuration and then run flask app
 if __name__ == '__main__':
     first_run()
     global listening_port
