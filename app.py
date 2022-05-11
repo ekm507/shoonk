@@ -51,6 +51,8 @@ app.url_map.strict_slashes = False
 def shorten(link):
     print(request.host_url)
     last_number = int(open('last_number').read()) + 1
+    global hostname
+    print(last_number)
     open('last_number', 'w').write(str(last_number))
     text = f"""
     <!DOCTYPE html>
@@ -61,7 +63,7 @@ def shorten(link):
     with open(f'l/{last_number:04d}.html', 'w') as w:
         w.write(text)
 
-    full_link = f"{request.host_url}s/{last_number:04d}.html"
+    full_link = f"{hostname}s/{last_number:04d}.html"
 
     return f"<a href={full_link}>{full_link}</a>"
 
