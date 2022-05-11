@@ -4,6 +4,8 @@ import re
 import os
 from configparser import ConfigParser
 
+# TODO: use hostname and portnumber in config file
+
 def first_run():
     # this function is for making configurations on the first run.
 
