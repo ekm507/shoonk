@@ -9,6 +9,7 @@ from configparser import ConfigParser
 def first_run():
     # this function is for making configurations on the first run.
 
+    os.makedirs('l', exist_ok=True)
 
     #Get the configparser object
     config_object = ConfigParser()
