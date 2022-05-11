@@ -14,8 +14,8 @@ def first_run():
     if os.path.exists('configuration'):
         config_object.read('configuration')
         hostname = config_object['APP']['hostname']
-        hostname = config_object['APP']['listening_port']
-        hostname = config_object['APP']['last_number']
+        listening_port = config_object['APP']['listening_port']
+        last_number = config_object['APP']['last_number']
 
     else:
         hostname = input("insert hostname which is in form of a link.(eg. https://example.com/ ): ")
