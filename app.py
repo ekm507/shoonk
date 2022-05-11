@@ -12,7 +12,7 @@ def first_run():
     last_number = 0
 
 
-    global hostname
+    global hostname, listening_port
     #Get the configparser object
     config_object = ConfigParser()
 
@@ -84,4 +84,5 @@ def get_full(link):
 
 if __name__ == '__main__':
     first_run()
-    app.run()
+    global listening_port
+    app.run(port = listening_port)
