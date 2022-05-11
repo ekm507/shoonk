@@ -1,26 +1,31 @@
-from flask import Flask, request
-from sys import argv
+from flask import Flask
 import re
 import os
 from configparser import ConfigParser
 
-# TODO: use hostname and portnumber in config file
+# read from configuration file or set configuration file for first run.
+# this function will read hostname and listening_port from config file.
+# also it will create last_number file if it does not exist
 def first_run():
     # this function is for making configurations on the first run.
 
+    # make ./l directory for storing link files
     os.makedirs('l', exist_ok=True)
     last_number = 0
 
 
     global hostname, listening_port
+
     #Get the configparser object
     config_object = ConfigParser()
 
+    # read configuration from file, if it exists
     if os.path.exists('configuration'):
         config_object.read('configuration')
         hostname = config_object['APP']['hostname']
         listening_port = config_object['APP']['listening_port']
 
+    # generate configuration file if it does not exist
     else:
         hostname = input("insert hostname which is in form of a link.(eg. https://example.com/ ): ")
 
@@ -45,18 +50,26 @@ def first_run():
         open('last_number', 'w').write(str(last_number))
 
 
+# make a flask app
 app = Flask(__name__)
 app.url_map.strict_slashes = False
 
+# give it a long link to shorten (/l stands for long link)
 @app.route("/l/<path:link>")
 def shorten(link):
-    print(request.host_url)
+
+    # get number of latest link generated so that files will not be overwritten
     last_number = int(open('last_number').read()) + 1
+
     global hostname
-    print(last_number)
+
+    # if links does not start with "http", add it to the link.
+    # this must be done in a way that it supports other protocols too. TODO
     open('last_number', 'w').write(str(last_number))
     if link[:4] != 'http':
         link = 'http://' + link
+    
+    # generate file with redirect tag
     text = f"""
     <!DOCTYPE html>
         <head>
@@ -66,6 +79,8 @@ def shorten(link):
     with open(f'l/{last_number:04d}.html', 'w') as w:
         w.write(text)
 
+    # return link to the file with short link.
+    # add ability to change the link. TODO
     full_link = f"{hostname}s/{last_number:04d}.html"
 
     return f"<a href={full_link}>{full_link}</a>"
