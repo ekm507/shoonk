@@ -75,9 +75,9 @@ def shorten(link):
 def get_full(link):
     print(link)
     link = link[:4]
-    if re.match(r'^[0-9]{4}$', link):
+    if re.match(r'^[0-9]{1,4}$', link):
         try:
-            return (open(f'l/{link}.html').read())
+            return (open(f'l/{int(link):04d}.html').read())
         except FileNotFoundError:
             return (open(f'404.html').read())
     else:
