@@ -1,6 +1,43 @@
 from flask import Flask, request
 from sys import argv
 import re
+import os
+from configparser import ConfigParser
+
+def first_run():
+    # this function is for making configurations on the first run.
+
+
+    #Get the configparser object
+    config_object = ConfigParser()
+
+    if os.path.exists('configuration'):
+        config_object.read('configuration')
+        hostname = config_object['APP']['hostname']
+        hostname = config_object['APP']['listening_port']
+        hostname = config_object['APP']['last_number']
+
+    else:
+        hostname = input("insert hostname which is in form of a link.(eg. https://example.com/ ): ")
+
+        listening_port = int(input("insert listening TCP port for flask (eg. 5000 ): "))
+
+        os.makedirs('l', exist_ok=True)
+        existing_links = os.listdir('./l')
+        try:
+            existing_links = list(filter(lambda x:re.match(r'[0-9]{4}\.html', x), existing_links))
+            existing_links.sort()
+            last_number = int(existing_links[-1][:4])
+        except:
+            last_number = 0
+
+        config_object['APP'] = {
+            'hostname': hostname,
+            'listening_port': listening_port,
+            'last_number': last_number,
+        }
+        with open('configuration', 'w') as conf:
+            config_object.write(conf)
 
 
 app = Flask(__name__)
@@ -39,4 +76,5 @@ def get_full(link):
 
 
 if __name__ == '__main__':
+    first_run()
     app.run()
