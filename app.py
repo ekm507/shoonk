@@ -39,6 +39,8 @@ def first_run():
         with open('configuration', 'w') as conf:
             config_object.write(conf)
 
+        open('last_number', 'w').write(str(last_number))
+
 
 app = Flask(__name__)
 app.url_map.strict_slashes = False
