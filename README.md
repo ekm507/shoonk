@@ -21,3 +21,9 @@ python3 app.py
 
 3. if you are using a reverse proxy, you may need to configure nginx or other stuff in your server.
 
+
+## TODO
+
+1. make better webpage for link (add a copy to clipboard button)
+
+2. add ability to customize link names for short and long links. (/l and /s)
