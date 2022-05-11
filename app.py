@@ -5,11 +5,11 @@ import os
 from configparser import ConfigParser
 
 # TODO: use hostname and portnumber in config file
-
 def first_run():
     # this function is for making configurations on the first run.
 
     os.makedirs('l', exist_ok=True)
+    last_number = 0
 
 
     global hostname
@@ -20,7 +20,6 @@ def first_run():
         config_object.read('configuration')
         hostname = config_object['APP']['hostname']
         listening_port = config_object['APP']['listening_port']
-        last_number = config_object['APP']['last_number']
 
     else:
         hostname = input("insert hostname which is in form of a link.(eg. https://example.com/ ): ")
@@ -33,16 +32,16 @@ def first_run():
             existing_links.sort()
             last_number = int(existing_links[-1][:4])
         except:
-            last_number = 0
+            last_number = int(0)
 
         config_object['APP'] = {
             'hostname': hostname,
             'listening_port': listening_port,
-            'last_number': last_number,
         }
         with open('configuration', 'w') as conf:
             config_object.write(conf)
 
+    if not os.path.exists('last_number'):
         open('last_number', 'w').write(str(last_number))
 
 
