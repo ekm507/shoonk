@@ -97,7 +97,7 @@ def get_full(link):
     link = link[:4]
     if re.match(r'^[0-9]{1,4}$', link):
         # if link is not in the directory, return 404
-        if not os.path.exists(f'l/{link:04d}.html'):
+        if not os.path.exists(f'l/{int(link):04d}.html'):
             return (open(f'404.html').read())
         else:
             return (open(f'l/{int(link):04d}.html').read())
