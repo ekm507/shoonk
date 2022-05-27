@@ -96,10 +96,11 @@ def get_full(link):
     # if there is any errors, it will return a 404 page
     link = link[:4]
     if re.match(r'^[0-9]{1,4}$', link):
-        try:
-            return (open(f'l/{int(link):04d}.html').read())
-        except FileNotFoundError:
+        # if link is not in the directory, return 404
+        if not os.path.exists(f'l/{link:04d}.html'):
             return (open(f'404.html').read())
+        else:
+            return (open(f'l/{int(link):04d}.html').read())
     else:
         return (open(f'404.html').read())
 
