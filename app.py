@@ -66,6 +66,8 @@ def shorten(link):
     # if links does not start with "http", add it to the link.
     # this must be done in a way that it supports other protocols too. TODO
     open('last_number', 'w').write(str(last_number))
+    if re.match(r'^https:/[^/]', link):
+        link = 'https://' + link[7:]
     if link[:4] != 'http':
         link = 'http://' + link
     
