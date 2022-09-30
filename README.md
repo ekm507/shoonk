@@ -2,6 +2,8 @@
 
 Static link shortener without database written in flask.
 
+![logo and name](logo.png)
+
 ## How to use
 
 1. Clone this repo, install dependancies and run.
