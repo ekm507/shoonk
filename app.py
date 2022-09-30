@@ -66,6 +66,8 @@ def shorten(link):
     # if links does not start with "http", add it to the link.
     # this must be done in a way that it supports other protocols too. TODO
     open('last_number', 'w').write(str(last_number))
+    if re.match(r'^https:/[^/]', link):
+        link = 'https://' + link[7:]
     if link[:4] != 'http':
         link = 'http://' + link
     
@@ -94,10 +96,11 @@ def get_full(link):
     # if there is any errors, it will return a 404 page
     link = link[:4]
     if re.match(r'^[0-9]{1,4}$', link):
-        try:
-            return (open(f'l/{int(link):04d}.html').read())
-        except FileNotFoundError:
+        # if link is not in the directory, return 404
+        if not os.path.exists(f'l/{int(link):04d}.html'):
             return (open(f'404.html').read())
+        else:
+            return (open(f'l/{int(link):04d}.html').read())
     else:
         return (open(f'404.html').read())
 
